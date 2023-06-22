@@ -1,0 +1,6 @@
+root:x:0:root
+adm:x:4:rebornos
+wheel:x:10:rebornos
+uucp:x:14:rebornos
+bred:x:1000:
+autologin:x:967:rebornos
