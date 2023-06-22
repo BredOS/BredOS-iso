@@ -1,5 +1,5 @@
 *~
-archiso-*.tar.gz*
+*.tar.gz*
 work/
 out/
 *.iso
