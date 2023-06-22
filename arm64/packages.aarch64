@@ -1,0 +1,323 @@
+# =======
+# ArchISO
+# =======
+alsa-utils
+arch-install-scripts
+archinstall
+b43-fwcutter
+base
+bind-tools
+brltty
+# broadcom-wl # DKMS version included below
+btrfs-progs
+clonezilla
+crda
+cryptsetup
+darkhttpd
+ddrescue
+dhclient
+dhcpcd
+diffutils
+dmraid
+dnsmasq
+dosfstools
+e2fsprogs
+efibootmgr
+espeakup
+ethtool
+exfatprogs
+f2fs-tools
+fatresize
+fsarchiver
+gnu-netcat
+gpart
+gpm
+gptfdisk
+fish
+grub
+hdparm
+ipw2100-fw
+ipw2200-fw
+irssi
+iw
+iwd
+jfsutils
+kitty-terminfo
+less
+lftp
+libfido2
+libusb-compat
+linux-firmware
+livecd-sounds
+lsscsi
+lvm2
+lynx
+man-db
+man-pages
+mc
+mdadm
+mkinitcpio
+mkinitcpio-openswap
+mkinitcpio-archiso
+mkinitcpio-nfs-utils
+modemmanager
+mtools
+nano
+nbd
+ndisc6
+nfs-utils
+nilfs-utils
+nmap
+ntfs-3g
+nvme-cli
+openconnect
+openssh
+openvpn
+partclone
+parted
+partimage
+pcsclite
+ppp
+pptpclient
+pv
+reiserfsprogs
+rp-pppoe
+rsync
+rxvt-unicode-terminfo
+screen
+sdparm
+sg3_utils
+smartmontools
+sof-firmware
+squashfs-tools
+sudo
+systemd-resolvconf
+tcpdump
+terminus-font
+testdisk
+tmux
+tpm2-tss
+udftools
+usb_modeswitch
+usbmuxd
+usbutils
+vim
+# virtualbox-guest-utils-nox # Replaced with virtualbox-guest-utils below
+vpnc
+wireless-regdb
+wireless_tools
+wpa_supplicant
+wvdial
+xfsprogs
+xl2tpd
+
+# =====================
+# Installer - Calamares
+# =====================
+qt5-location
+qt5-svg
+qt5-tools
+qt5-webengine
+qt5-xmlpatterns
+qt5ct
+polkit-qt5
+kconfig
+kcoreaddons
+kdbusaddons
+ki18n
+kpackage
+kparts
+kpmcore
+boost
+boost-libs
+libatasmart
+libpwquality
+parted
+plasma-framework
+solid
+udisks2
+yaml-cpp
+polkit
+pavucontrol
+pulseaudio
+pulseaudio-alsa
+
+# =========
+# VM - QEMU
+# =========
+qemu-guest-agent
+spice-vdagent
+
+# ========
+# Hardware
+# ========
+libinput
+xorg-drivers
+
+# ==================
+# Hardware - Network
+# ==================
+networkmanager
+network-manager-applet
+modemmanager
+usb_modeswitch
+rp-pppoe
+
+# ================
+# Hardware - Other
+# ================
+# xf86-input-mtrack-git
+# ** AUR **
+
+# =========
+# Diagnosis
+# =========
+inxi
+pastebinit
+
+# ======
+# Rescue
+# ======
+os-prober
+
+# ----------------
+# Rescue - Storage
+# ----------------
+gparted
+hdparm
+sdparm
+
+# Rescue - Storage - exFAT
+# ========================
+exfatprogs
+exfat-utils
+
+# Rescue - Storage - APFS
+# =======================
+# linux-apfs-rw-dkms-git
+# apfsprogs-git
+
+# Rescue - Storage - Bcachefs
+# ===========================
+# linux-bcachefs-git
+# bcachefs-tools-git
+
+# Rescue - Storage - ZFS
+# ======================
+# zfs-linux
+# zfs-linux-lts
+# zfs-dkms
+# zfs-utils
+
+# Rescue - Storage - VFAT
+# =======================
+dosfstools
+
+# Rescue - Storage - ext3, ext4
+# =============================
+e2fsprogs
+
+# Rescue - Storage - NTFS
+# =======================
+ntfs-3g
+
+# Rescue - Storage - BTRFS
+# ========================
+btrfs-progs
+
+# Rescue - Storage - XFS
+# ======================
+# xfs-tools
+
+# Rescue - Storage - ReiserFS
+# ===========================
+reiserfsprogs
+
+# Rescue - Storage - F2FS
+# =======================
+f2fs-tools
+
+# Rescue - Storage - HFS
+# ======================
+# hfsprogs
+
+# Rescue - Storage - JFS
+# ======================
+jfsutils
+
+# Rescue - Storage - NILFS2
+# =========================
+nilfs-utils
+
+# Rescue - Storage - UDF
+# ======================
+udftools
+
+# Rescue - Storage - Reiser4
+# ==========================
+# reiser4progs
+
+# ======
+# Kernel
+# ======
+linux-aarch64
+linux-aarch64-headers
+# linux-lts
+# linux-lts-headers
+
+# ===
+# GUI
+# ===
+cinnamon
+gnome-terminal
+lightdm
+xorg
+hicolor-icon-theme
+lightdm-slick-greeter
+noto-fonts
+gedit
+gnome-system-monitor
+mint-themes
+mint-y-icons
+# mintlocale
+engrampa
+# ---------
+# GUI - AMD
+# ---------
+mesa
+mesa-utils
+# lib32-mesa
+mesa-vdpau
+# lib32-mesa-vdpau
+
+# ------------
+# GUI - NVIDIA
+# ------------
+# nvidia
+# nvidia-lts
+# nvidia-utils
+# lib32-nvidia-utils
+
+# ====
+# Misc 
+# ====
+# yay
+base-devel
+nano-syntax-highlighting
+neofetch
+perl
+python
+inxi
+firefox
+otf-fira-mono
+otf-fira-sans
+packagekit
+# ------------
+# BredOS - misc
+# ------------
+calamares
+bredos-keyring
+lsb-release
+bred-os-release
+bredos-mirrorlist
+bred-skel-default
