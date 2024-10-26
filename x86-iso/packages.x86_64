@@ -1,0 +1,116 @@
+# ====
+# CORE
+# ====
+
+base
+base-devel
+networkmanager
+network-manager-applet
+nano
+lm_sensors
+archlinux-keyring
+btrfs-progs
+bluez
+bash
+bash-completion
+omb-skel
+sudo
+polkit
+bluez-utils
+#rock5b-post-install
+#f2fs-tools
+mesa
+libdrm
+bred-skel-default
+uboot-tools
+linux-firmware
+linux-firmware-whence
+lsb-release
+xf86-video-fbdev
+xorg-server
+bred-os-release
+parted
+gvfs
+pipewire-pulse
+#pipewire-media-session
+pipewire-alsa
+pipewire-jack
+bredos-keyring
+bredos-logo
+bredos-zram-defaults
+bredos-mirrorlist
+dosfstools
+e2fsprogs
+librewolf-bin
+neofetch
+# update-extlinux
+blueman
+cpupower
+less
+lshw
+expect
+inxi
+fastfetch
+
+
+# ======
+# BAKERY
+# ======
+
+gnu-netcat
+bakery
+bakery-gui
+
+# ===
+# GUI
+# ===
+cinnamon
+gnome-terminal
+lightdm
+xorg
+hicolor-icon-theme
+lightdm-slick-greeter
+noto-fonts
+gedit
+gnome-system-monitor
+mint-themes
+mint-y-icons
+# mintlocale
+engrampa
+gparted
+
+grub
+mkinitcpio-archiso
+mkinitcpio-nfs-utils
+
+linux
+linux-headers
+pv
+libbsd
+libmd
+
+# --------------
+# Graphics - AMD
+# --------------
+mesa
+mesa-utils
+# lib32-mesa
+mesa-vdpau
+# lib32-mesa-vdpau
+
+# -----------------
+# Graphics - NVIDIA
+# -----------------
+nvidia
+# nvidia-lts
+nvidia-utils
+# lib32-nvidia-utils
+
+os-prober
+
+pv
+spice-vdagent
+qemu-guest-agent
+
+amd-ucode
+intel-ucode

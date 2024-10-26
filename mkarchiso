@@ -433,9 +433,10 @@ _make_boot_on_iso9660() {
     install -m 0644 -- "${pacstrap_dir}/boot/Image" "${isofs_dir}/${install_dir}/boot/${arch}/" || true
     install -m 0644 -- "${pacstrap_dir}/boot/initramfs-"*".img" "${isofs_dir}/${install_dir}/boot/${arch}/" || true
     install -m 0644 -- "${pacstrap_dir}/boot/vmlinuz-"* "${isofs_dir}/${install_dir}/boot/${arch}/" || true
-    install -d -m 0755 -- "${isofs_dir}/${install_dir}/boot/${arch}/dtbs"
-    cp -r -- "${pacstrap_dir}/boot/dtbs" "${isofs_dir}/${install_dir}/boot/${arch}/"
-
+    if [[ "${arch}" == 'aarch64' ]]; then
+        install -d -m 0755 -- "${isofs_dir}/${install_dir}/boot/${arch}/dtbs" || true
+        cp -r -- "${pacstrap_dir}/boot/dtbs" "${isofs_dir}/${install_dir}/boot/${arch}/" || true
+    fi
 
     if (( need_external_ucodes )); then
         for ucode_image in "${ucodes[@]}"; do
@@ -2270,6 +2271,11 @@ _build_iso_base() {
         _add_xorrisofs_options_uefi-arm64.grub.esp
         _make_boot_on_iso9660
         _make_boot_on_fat
+    fi
+    if [[ "${arch}" == 'x86_64' ]]; then
+        _add_xorrisofs_options_uefi-x64.grub.esp
+        _make_boot_on_iso9660
+        # _make_boot_on_fat
     fi
     _run_once _cleanup_pacstrap_dir
     _run_once _prepare_airootfs_image
