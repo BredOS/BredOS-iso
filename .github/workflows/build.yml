@@ -72,9 +72,9 @@ jobs:
 
         - name: Send image to release job
           run: |
-            echo "$SSH_KEY" > /tmp/.ssh/deploy_key
-            chmod 600 /tmp/.ssh/deploy_key
-            scp -i /tmp/.ssh/deploy_key -o StrictHostKeyChecking=no out/*.iso "$RELEASE_VM:/images/"
+            echo "$SSH_KEY" > /tmp/deploy_key
+            chmod 600 /tmp/deploy_key
+            scp -i /tmp/deploy_key -o StrictHostKeyChecking=no out/*.iso "$RELEASE_VM:/images/"
           env:
             SSH_KEY: ${{ secrets.SSH_KEY }}
             RELEASE_VM: ${{ secrets.RELEASE_VM }}
