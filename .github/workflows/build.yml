@@ -64,7 +64,7 @@ jobs:
           run: |
             init-docker
             sudo pacman -Sy --noconfirm --needed \
-            arch-install-scripts bash dosfstools e2fsprogs erofs-utils libarchive libisoburn mtools squashfs-tools grub scp dropbear-scp
+            arch-install-scripts bash dosfstools e2fsprogs erofs-utils libarchive libisoburn mtools squashfs-tools grub openssh
 
         - name: Build ISO
           run: |
