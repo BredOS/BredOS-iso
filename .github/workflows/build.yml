@@ -1,0 +1,143 @@
+name: Build Isos
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-arm:
+    runs-on: [self-hosted, ARM64, BredOS]
+
+    strategy:
+      fail-fast: false
+      matrix:
+        iso: [mainline-iso]
+    
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            path: iso
+
+        - name: Install dependencies
+          run: |
+            sudo pacman -Sy --noconfirm --needed \
+            arch-install-scripts bash dosfstools e2fsprogs erofs-utils libarchive libisoburn mtools squashfs-tools grub
+
+        - name: Build ISO
+          run: |
+            sudo umount -R ./work/aarch64/* || true
+            sudo rm -rf /var/lib/pacman/db.lck ./out ./work
+            sudo mkarchiso -v -w ./work -o ./out ./iso/${{ matrix.iso }}
+
+        - name: Send image to release job
+          run: |
+            scp out/*.iso $RELEASE_VM:/images/
+          env:
+            RELEASE_VM: ${{ secrets.RELEASE_VM }}
+
+        - name: Cleanup
+          if: always()
+          run: |
+            sudo umount -R ./work/aarch64/* || true
+            sudo rm -rf ./work ./out
+
+  build-x86:
+    runs-on: ubuntu-latest
+    container:
+      image: bredos/bredos:latest
+      ports:
+        - 80
+      options: --privileged
+
+    strategy:
+      fail-fast: false
+      matrix:
+        iso: [x86-iso]
+    
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            path: iso
+
+        - name: Install dependencies
+          run: |
+            sudo pacman -Sy --noconfirm --needed \
+            arch-install-scripts bash dosfstools e2fsprogs erofs-utils libarchive libisoburn mtools squashfs-tools grub
+
+        - name: Build ISO
+          run: |
+            sudo umount -R ./work/aarch64/* || true
+            sudo rm -rf /var/lib/pacman/db.lck ./out ./work
+            sudo mkarchiso -v -w ./work -o ./out ./iso/${{ matrix.iso }}
+
+        - name: Send image to release job
+          run: |
+            echo "$SSH_KEY" > ~/.ssh/deploy_key
+            chmod 600 ~/.ssh/deploy_key
+            scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no out/*.iso "$RELEASE_VM:/images/"
+          env:
+            SSH_KEY: ${{ secrets.SSH_KEY }}
+            RELEASE_VM: ${{ secrets.RELEASE_VM }}
+        
+
+        - name: Cleanup
+          if: always()
+          run: |
+            sudo umount -R ./work/aarch64/* || true
+            sudo rm -rf ./work ./out
+  release:
+    if: always()
+    needs: [build-arm, build-x86]
+    runs-on: [self-hosted, ARM64, BredOS, emag]
+
+    steps:
+      - name: Set current date as tag name
+        id: set_tag_name
+        run: echo "TAG_NAME=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Create Release and Upload Each Image Individually
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          TAG_NAME: ${{ env.TAG_NAME }}
+        run: |
+          # Initialize the release body with MD5 checksums
+          RELEASE_BODY="MD5 Checksums:\n"
+
+          # Calculate MD5 for each image and add it to RELEASE_BODY
+          for img in /images/*.iso; do
+            FILENAME=$(basename "$img")
+            MD5SUM=$(md5sum "$img" | awk '{print $1}')
+            RELEASE_BODY+="$FILENAME: $MD5SUM\n"
+          done
+
+          # Create a draft release with the MD5 checksums in the body
+          RELEASE_RESPONSE=$(curl -s -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"tag_name\": \"$TAG_NAME\", \"name\": \"$TAG_NAME\", \"body\": \"$RELEASE_BODY\", \"draft\": false, \"prerelease\": true}" \
+            "https://api.github.com/repos/$REPO/releases")
+
+          RELEASE_ID=$(echo $RELEASE_RESPONSE | jq -r '.id')
+
+          if [ "$RELEASE_ID" == "null" ]; then
+            echo "Failed to create a release. Response: $RELEASE_RESPONSE"
+            exit 1
+          fi
+
+          # Upload each image file to the release
+          for img in /images/*.img.xz; do
+            FILENAME=$(basename "$img")
+            echo "Uploading $FILENAME to release $RELEASE_ID"
+            curl -s \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/octet-stream" \
+              -T "$img" \
+              "https://uploads.github.com/repos/$REPO/releases/$RELEASE_ID/assets?name=$FILENAME"
+          done
+
+      - name: Clean up
+        if: always()
+        run: |
+          rm -rf ./out/ /images/*.img.xz
