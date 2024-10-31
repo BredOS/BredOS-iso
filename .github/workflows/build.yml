@@ -27,7 +27,7 @@ jobs:
           run: |
             sudo umount -R ./work/aarch64/* || true
             sudo rm -rf /var/lib/pacman/db.lck ./out ./work
-            sudo mkarchiso -v -w ./work -o ./out ./iso/${{ matrix.iso }}
+            sudo ./iso/mkarchiso -v -w ./work -o ./out ./iso/${{ matrix.iso }}
 
         - name: Send image to release job
           run: |
@@ -62,14 +62,13 @@ jobs:
 
         - name: Install dependencies
           run: |
+            init-docker
             sudo pacman -Sy --noconfirm --needed \
             arch-install-scripts bash dosfstools e2fsprogs erofs-utils libarchive libisoburn mtools squashfs-tools grub
 
         - name: Build ISO
           run: |
-            sudo umount -R ./work/aarch64/* || true
-            sudo rm -rf /var/lib/pacman/db.lck ./out ./work
-            sudo mkarchiso -v -w ./work -o ./out ./iso/${{ matrix.iso }}
+            sudo ./iso/mkarchiso -v -w ./work -o ./out ./iso/${{ matrix.iso }}
 
         - name: Send image to release job
           run: |
@@ -84,7 +83,6 @@ jobs:
         - name: Cleanup
           if: always()
           run: |
-            sudo umount -R ./work/aarch64/* || true
             sudo rm -rf ./work ./out
   release:
     if: always()
@@ -96,7 +94,7 @@ jobs:
         id: set_tag_name
         run: echo "TAG_NAME=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
-      - name: Create Release and Upload Each Image Individually
+      - name: Create Release and Upload Each iso Individually
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
@@ -105,7 +103,7 @@ jobs:
           # Initialize the release body with MD5 checksums
           RELEASE_BODY="MD5 Checksums:\n"
 
-          # Calculate MD5 for each image and add it to RELEASE_BODY
+          # Calculate MD5 for each iso and add it to RELEASE_BODY
           for img in /images/*.iso; do
             FILENAME=$(basename "$img")
             MD5SUM=$(md5sum "$img" | awk '{print $1}')
@@ -127,7 +125,7 @@ jobs:
           fi
 
           # Upload each image file to the release
-          for img in /images/*.img.xz; do
+          for img in /images/*.iso; do
             FILENAME=$(basename "$img")
             echo "Uploading $FILENAME to release $RELEASE_ID"
             curl -s \
