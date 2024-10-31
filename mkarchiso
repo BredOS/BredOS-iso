@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-set -e -u -x
+set -e -u
 shopt -s extglob
 
 # Control the environment
