@@ -138,4 +138,4 @@ jobs:
       - name: Clean up
         if: always()
         run: |
-          rm -rf ./out/ /images/*.img.xz
+          rm -rf ./out/ /images/*.iso
