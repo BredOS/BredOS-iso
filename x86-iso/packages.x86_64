@@ -39,6 +39,9 @@ bredos-keyring
 bredos-logo
 bredos-zram-defaults
 bredos-mirrorlist
+bredos-nohang
+bredos-news
+bredos-sysreport
 dosfstools
 e2fsprogs
 firefox
