@@ -25,6 +25,9 @@ mesa
 libdrm
 bred-skel-default
 uboot-tools
+linux-cix
+linux-cix-headers
+linux-cix-extra
 linux-firmware
 linux-firmware-whence
 lsb-release
@@ -53,9 +56,17 @@ lshw
 expect
 inxi
 fastfetch
+bredos-nohang
 bredos-news
 bredos-sysreport
 
+# ===
+# EFI
+# ===
+
+grub
+mkinitcpio-archiso
+mkinitcpio-nfs-utils
 
 # ======
 # BAKERY
@@ -68,6 +79,7 @@ bakery-gui
 cinnamon
 gnome-terminal
 lightdm
+lightdm-gtk-greeter
 xorg
 hicolor-icon-theme
 lightdm-slick-greeter
@@ -84,14 +96,7 @@ bredos-sysreport
 bredos-news
 pacman-contrib
 gparted
-
-grub
-mkinitcpio-archiso
-mkinitcpio-nfs-utils
-
 pv
-libbsd
-libmd
 
 # --------------
 # Graphics - AMD
@@ -112,33 +117,3 @@ libglvnd-cix
 orion-o6-post-install
 r8126-dkms
 xorg-xwayland-cix
-
-bredos-nohang
-bredos-news
-bredos-sysreport
-
-
-grub
-mkinitcpio-archiso
-mkinitcpio-nfs-utils
-
-linux-cix
-linux-cix-headers
-linux-cix-extra
-
-pv
-libbsd
-libmd
-
-# --------------
-# Graphics - CIX
-# --------------
-mali-G720-firmware
-mesa-cix
-libglvnd-cix
-orion-o6-post-install
-xorg-xwayland-cix
-
-bredos-nohang
-bredos-news
-bredos-sysreport
